@@ -165,7 +165,7 @@ public class CraneController : MonoBehaviour
         if (Input.GetKeyDown(_downKey))
         {
             if (_scoreTextManager != null) _scoreTextManager.OnCustomerAction(100);
-            _currentMode = CraneStates.MoveDown;
+            _currentMode = CraneState.MoveDown;
         }
     }
 
