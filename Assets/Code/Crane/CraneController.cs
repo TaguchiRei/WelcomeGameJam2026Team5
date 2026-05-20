@@ -5,8 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CraneController : MonoBehaviour
 {
-    [Header("Control")]
-    [SerializeField] private KeyCode _leftKey = KeyCode.A;
+    [Header("Control")] [SerializeField] private KeyCode _leftKey = KeyCode.A;
     [SerializeField] private KeyCode _rightKey = KeyCode.D;
     [SerializeField] private KeyCode _downKey = KeyCode.Space;
 
@@ -91,31 +90,8 @@ public class CraneController : MonoBehaviour
         if (_rb2D.position.y <= _fallLimitY)
         {
             if (_isWaiting) return;
-            StartCoroutine(MoveCatch());
-        }
-    }
-
-    /// <summary>
-    /// アームDown状態で1秒間待機
-    /// </summary>
-    private IEnumerator MoveCatch()
-    {
-        _isWaiting = true;
-        _rb2D.linearVelocity = Vector2.zero; // 待機中は止める
-
-        yield return new WaitForSeconds(_WAITTIME);
-
-        // 何か掴んでいれば「景品あり」、空なら「上昇」へ
-        if (_caughtPrize != null)
-        {
-            _currentMode = CraneStates.HavePrize;
-        }
-        else
-        {
             _currentMode = CraneStates.MoveUp;
         }
-
-        _isWaiting = false;
     }
 
     /// <summary>
@@ -156,7 +132,7 @@ public class CraneController : MonoBehaviour
     /// </summary>
     private void ReturnStartPosition()
     {
-        float move = Input.GetAxis("Horizontal");
+        float move = GetAxisHorizontal();
         _rb2D.linearVelocity = new Vector2(move * _horizontalSpeed, 0f);
 
         // 下がる時と同じキーで落とす
@@ -204,12 +180,12 @@ public class CraneController : MonoBehaviour
     private int GetAxisHorizontal()
     {
         int i = 0;
-        if (Input.GetKeyDown(_leftKey))
+        if (Input.GetKey(_leftKey))
         {
             i--;
         }
 
-        if (Input.GetKeyDown(_rightKey))
+        if (Input.GetKey(_rightKey))
         {
             i++;
         }

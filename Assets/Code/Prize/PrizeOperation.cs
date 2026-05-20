@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class PrizeOperation : MonoBehaviour
 {
-    [SerializeField] private float forcePower = 5.0f;
-    [SerializeField] private string reflectTag = "Wall";
-    [SerializeField] private float reflectPower = 1.0f;
+    [SerializeField] private float _forcePower = 5.0f;
+    [SerializeField] private string _reflectTag = "Wall";
+    [SerializeField] private float _reflectPower = 1.0f;
 
-    private Rigidbody2D rb;
-    private Camera mainCamera;
-    private Vector2 mouseDownPosition;
-    private bool isDragging;
-    private bool isCaught = false;
+    private Rigidbody2D _rb;
+    private Camera _mainCamera;
+    private Vector2 _mouseDownPosition;
+    private bool _isDragging;
+    private bool _isCaught = false;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        mainCamera = Camera.main;
+        _rb = GetComponent<Rigidbody2D>();
+        _mainCamera = Camera.main;
     }
 
     /// <summary>
@@ -23,19 +23,9 @@ public class PrizeOperation : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
-        if (isCaught) return;
-        isDragging = true;
-        mouseDownPosition = GetMouseWorldPosition();
+        if (_isCaught) return;
+        _isDragging = true;
         SetVelocity(Vector2.zero);
-    }
-
-    /// <summary>
-    /// マウスを押している間は移動可能にする
-    /// </summary>
-    private void OnMouseDrag()
-    {
-        if (isCaught) return;
-        rb.MovePosition(GetMouseWorldPosition());
     }
 
     /// <summary>
@@ -43,13 +33,13 @@ public class PrizeOperation : MonoBehaviour
     /// </summary>
     private void OnMouseUp()
     {
-        if (isCaught) return;
-        isDragging = false;
+        if (_isCaught) return;
+        _isDragging = false;
 
         Vector2 mouseUpPosition = GetMouseWorldPosition();
-        Vector2 force = mouseDownPosition - mouseUpPosition;
+        Vector2 force = (Vector2)transform.position - mouseUpPosition;
 
-        rb.AddForce(force * forcePower, ForceMode2D.Impulse);
+        _rb.AddForce(force * _forcePower, ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -57,7 +47,7 @@ public class PrizeOperation : MonoBehaviour
     /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isCaught || isDragging || !collision.gameObject.CompareTag(reflectTag) || collision.contactCount == 0)
+        if (_isCaught || _isDragging || !collision.gameObject.CompareTag(_reflectTag) || collision.contactCount == 0)
         {
             return;
         }
@@ -66,38 +56,38 @@ public class PrizeOperation : MonoBehaviour
         Vector2 normal = collision.GetContact(0).normal;
         Vector2 reflectedVelocity = Vector2.Reflect(currentVelocity, normal);
 
-        SetVelocity(reflectedVelocity * reflectPower);
+        SetVelocity(reflectedVelocity * _reflectPower);
     }
 
     public void BeCaught(Transform parentPoint)
     {
-        isCaught = true;
-        rb.isKinematic = true;
+        _isCaught = true;
+        _rb.isKinematic = true;
         SetVelocity(Vector2.zero);
-        rb.angularVelocity = 0f;
+        _rb.angularVelocity = 0f;
         transform.SetParent(parentPoint);
         transform.localPosition = Vector3.zero;
     }
 
     public void BeReleased()
     {
-        isCaught = false;
+        _isCaught = false;
         transform.SetParent(null);
-        rb.isKinematic = false;
+        _rb.isKinematic = false;
     }
 
     private Vector2 GetMouseWorldPosition()
     {
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = -mainCamera.transform.position.z;
+        mousePosition.z = -_mainCamera.transform.position.z;
 
-        return mainCamera.ScreenToWorldPoint(mousePosition);
+        return _mainCamera.ScreenToWorldPoint(mousePosition);
     }
 
     private Vector2 GetVelocity()
     {
 #if UNITY_6000_0_OR_NEWER
-        return rb.linearVelocity;
+        return _rb.linearVelocity;
 #else
         return rb.velocity;
 #endif
@@ -106,7 +96,7 @@ public class PrizeOperation : MonoBehaviour
     private void SetVelocity(Vector2 velocity)
     {
 #if UNITY_6000_0_OR_NEWER
-        rb.linearVelocity = velocity;
+        _rb.linearVelocity = velocity;
 #else
         rb.velocity = velocity;
 #endif
