@@ -1,35 +1,35 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
 public class ArrowWriter : MonoBehaviour
 {
-    [SerializeField] private ArrowRenderer arrow; // Inspectorで設定
-    private Rigidbody2D rb;
+    [SerializeField] private ArrowRenderer _arrow; // Inspectorで設定
+    private Rigidbody2D _rb;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        if (arrow == null)
+        _rb = GetComponent<Rigidbody2D>();
+        if (_arrow == null)
         {
             Debug.Log("ArrowRenderer is not assigned");
-            return;
         }
     }
 
     public void Launch(Vector2 force)
     {
-        arrow.Show();
-        arrow.DrawArrow(force);
+        _arrow.Show();
+        _arrow.DrawArrow(force);
 
-        rb.AddForce(force, ForceMode2D.Impulse);
+        _rb.AddForce(force, ForceMode2D.Impulse);
 
         StartCoroutine(HideArrowLater());
     }
 
-    private System.Collections.IEnumerator HideArrowLater()
+    private IEnumerator HideArrowLater()
     {
         yield return new WaitForSeconds(0.5f);
-        arrow.Hide();
+        _arrow.Hide();
     }
 }

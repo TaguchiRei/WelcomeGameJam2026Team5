@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PrizeController : MonoBehaviour
 {
-    [SerializeField] private string prizeTag = "PrizeTag";
+    [SerializeField] private string _prizeTag = "PrizeTag";
 
     // つかまれている　状態判定
-    public bool isKinematic = false;
+    public bool IsCaught = false;
     // クレーンのtransformを引数で受け取る
     // クレーンの子オブジェクトにする　同期
 
@@ -16,7 +16,7 @@ public class PrizeController : MonoBehaviour
     /// </summary>
     private void PrizeStop()
     {
-        isKinematic = true;
+        IsCaught = true;
     }
 
     /// <summary>
@@ -26,7 +26,7 @@ public class PrizeController : MonoBehaviour
     /// </summary>
     private void PrizeRelease()
     {
-        isKinematic = false;
+        IsCaught = false;
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class PrizeController : MonoBehaviour
     /// </summary>
     public void PrizeRelease(GameObject grabbedObject)
     {
-        if (!grabbedObject.CompareTag(prizeTag))
+        if (!grabbedObject.CompareTag(_prizeTag))
         {
             return;
         }
