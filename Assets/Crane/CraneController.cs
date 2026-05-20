@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody2D))]
@@ -19,8 +18,10 @@ public class CraneController : MonoBehaviour
     [Header("Start Position")]
     [SerializeField] private Vector2 _startPosition;
 
-
-    private const float _WAITTIME = 1f; //捕まえた時の待機時間 
+    //キー指定
+    [SerializeField] private KeyCode _leftKey;
+    [SerializeField] private KeyCode _rightKey;
+    [SerializeField] private KeyCode _downKey;
 
     private Rigidbody2D _rb2D;
 
@@ -61,7 +62,16 @@ public class CraneController : MonoBehaviour
     /// </summary>
     private void UpdateMoveHorizontal()
     {
-        float move = Input.GetAxis("Horizontal");
+        int move = 0;
+
+        if (Input.GetKey(_leftKey))
+        {
+            move = -1;
+        }
+        else if (Input.GetKey(_rightKey))
+        {
+            move = 1;
+        }
 
         _rb2D.linearVelocity = new Vector3(move * _horizontalSpeed, 0f, 0f);
     }
@@ -131,7 +141,7 @@ public class CraneController : MonoBehaviour
     /// </summary>
     private void MoveRelease()
     {
-        RestartState();
+        ResetState();
     }
 
     /// <summary>
@@ -139,7 +149,7 @@ public class CraneController : MonoBehaviour
     /// </summary>
     private void GetInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(_downKey))
         {
             nowMode = CraneStates.MoveDown;
             return;
@@ -149,7 +159,7 @@ public class CraneController : MonoBehaviour
     /// <summary>
     ///　アームがStartPositionにいった後の状態変化処理
     /// </summary>
-    private void RestartState()
+    private void ResetState()
     {
         nowMode = CraneStates.None;
         return;
