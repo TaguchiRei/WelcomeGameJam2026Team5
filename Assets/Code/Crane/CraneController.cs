@@ -158,14 +158,14 @@ public class CraneController : MonoBehaviour
     }
 
     /// <summary>
-    /// Spaceキーが押された際の状態変化
+    /// Spaceキーが押された際の状態変化（お金の支払いも追加）
     /// </summary>
     private void GetInput()
     {
         if (Input.GetKeyDown(_downKey))
         {
-            if (_scoreTextManager != null) _scoreTextManager.RequestAction(100);
-            _currentMode = CraneState.MoveDown;
+            if (_scoreTextManager != null) _scoreTextManager.OnCustomerAction(100);
+            _currentMode = CraneStates.MoveDown;
         }
     }
 

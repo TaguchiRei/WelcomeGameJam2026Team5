@@ -4,59 +4,67 @@ using System.Collections;
 
 public class ScoreTextManager : MonoBehaviour
 {
-    [SerializeField] private Text _scoreTextA;
-    [SerializeField] private Text _scoreTextB;
+    /// <summary> 客側（クレーン操作側）の純損益を表示するテキスト </summary>
+    [SerializeField] private Text _customerProfitText;
+    /// <summary> 店側（プライズ操作側）の純損益を表示するテキスト </summary>
+    [SerializeField] private Text _storeProfitText;
 
-    private Coroutine _blinkA;
-    private Coroutine _blinkB;
-    private Color _baseColor = new(1f, 0.84f, 0.4f);
+    /// <summary> テキスト点滅演出用のコルーチン（客側） </summary>
+    private Coroutine _customerBlinkCoroutine;
+    /// <summary> テキスト点滅演出用のコルーチン（店側） </summary>
+    private Coroutine _storeBlinkCoroutine;
+    /// <summary> UIテキストの基本色 </summary>
+    private Color _baseTextColor = new(1f, 0.84f, 0.4f);
     
-    private int _scoreA;
-    private int _scoreB;
-    private int _totalSpentMoney;
+    /// <summary> 客側の現在の純損益（獲得景品額 - 投入金額） </summary>
+    private int _customerTotalProfit;
+    /// <summary> 店側の現在の純損益（投入金額 - 景品原価） </summary>
+    private int _storeTotalProfit;
 
-    public void RequestAction(int cost)
+    public void OnCustomerAction(int cost)
     {
-        _totalSpentMoney += cost;
-        _scoreTextB.text = "SPENT: ¥" + _totalSpentMoney.ToString();
+        _customerTotalProfit -= cost;
+        _storeTotalProfit += cost;
+        UpdateUI();
+
+        if (_storeBlinkCoroutine != null) StopCoroutine(_storeBlinkCoroutine);
+        _storeBlinkCoroutine = StartCoroutine(BlinkEffect(_storeProfitText, Color.red));
     }
 
-    public void AddScoreA(int value)
+    public void OnPrizeCaught(int prizeValue)
     {
-        _scoreA += value;
-        _scoreTextA.text = _scoreA.ToString();
+        _customerTotalProfit += prizeValue;
+        _storeTotalProfit -= prizeValue;
+        UpdateUI();
 
-        if (_blinkA != null) StopCoroutine(_blinkA);
-        _blinkA = StartCoroutine(Blink(_scoreTextA, Color.blue));
+        if (_customerBlinkCoroutine != null) StopCoroutine(_customerBlinkCoroutine);
+        _customerBlinkCoroutine = StartCoroutine(BlinkEffect(_customerProfitText, Color.blue));
     }
 
-    public void AddScoreB(int value)
+    private void UpdateUI()
     {
-        _scoreB += value;
-        _scoreTextB.text = _scoreB.ToString();
-
-        if (_blinkB != null) StopCoroutine(_blinkB);
-        _blinkB = StartCoroutine(Blink(_scoreTextB, Color.red));
+        _customerProfitText.text = "客側損益: ¥" + _customerTotalProfit.ToString();
+        _storeProfitText.text = "店側損益: ¥" + _storeTotalProfit.ToString();
     }
 
-    IEnumerator Blink(Text t, Color flashColor)
+    IEnumerator BlinkEffect(Text targetText, Color flashColor)
     {
-        Color originalColor = _baseColor;
+        Color originalColor = _baseTextColor;
 
         for (int i = 0; i < 3; i++)
         {
-            t.color = flashColor;
+            targetText.color = flashColor;
             yield return new WaitForSeconds(0.1f);
 
-            t.color = originalColor;
+            targetText.color = originalColor;
             yield return new WaitForSeconds(0.1f);
         }
     }
     
-    
     void Start()
     {
-        _scoreTextA.color = _baseColor;
-        _scoreTextB.color = _baseColor;
+        _customerProfitText.color = _baseTextColor;
+        _storeProfitText.color = _baseTextColor;
+        UpdateUI();
     }
 }

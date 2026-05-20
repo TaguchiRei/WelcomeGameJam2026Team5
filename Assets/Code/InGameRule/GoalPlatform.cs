@@ -18,7 +18,7 @@ public class GoalPlatform : MonoBehaviour
         ScoreTextManager gm = FindFirstObjectByType<ScoreTextManager>();
         if (gm != null)
         {
-            gm.AddScoreA(300);
+            gm.OnPrizeCaught(300);
         }
         
         PrizeManager.Instance.SendToStorage(collision.gameObject);

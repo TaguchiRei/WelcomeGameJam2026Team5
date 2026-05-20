@@ -3,25 +3,25 @@ using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour
 {
-    [SerializeField] private Text _timerText;
-    [SerializeField] private float _endTime = 30f;
+    /// <summary> 残り時間のカウントダウンを表示するUIテキスト </summary>
+    [SerializeField] private Text _remainingTimeText;
+    /// <summary> ゲーム終了までの残り秒数 </summary>
+    [SerializeField] private float _remainingTime = 30f;
 
-    private bool _isGameEnd = false;
+    /// <summary> ゲームが終了判定済みかどうかを示すフラグ </summary>
+    private bool _isTimeUp = false;
 
     void Update()
     {
-        if (_isGameEnd) return;
+        if (_isTimeUp) return;
 
-        // 時間を減らす
-        _endTime -= Time.deltaTime;
+        _remainingTime -= Time.deltaTime;
 
-        // 小数点なしで表示
-        _timerText.text = "Time : " + (int)_endTime;
+        _remainingTimeText.text = "Time : " + (int)_remainingTime;
 
-        // 0になったら終了
-        if (_endTime <= 0)
+        if (_remainingTime <= 0)
         {
-            _isGameEnd = true;
+            _isTimeUp = true;
             //TODO ここでリザルトを表示するコードを呼び出す
         }
     }
