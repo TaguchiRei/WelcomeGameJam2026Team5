@@ -9,11 +9,6 @@ public class GoalEditor : MonoBehaviour
             Debug.Log("PrizeManager is not assigned");
             return;
         }
-        if (UIManager.Instance == null)
-        {
-            Debug.Log("UIManager is not assigned");
-            return;
-        }
 
         if (!collision.CompareTag("Prize")) return;
 
