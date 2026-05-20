@@ -1,26 +1,37 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class CraneController : MonoBehaviour
 {
+    [Header("Control")]
+    [SerializeField] private KeyCode _leftKey = KeyCode.A;
+    [SerializeField] private KeyCode _rightKey = KeyCode.D;
+    [SerializeField] private KeyCode _downKey = KeyCode.Space;
+
     [Header("Crane Horizontal Speed")] //左右移動の移動速度
-    [SerializeField] private float _horizontalSpeed = 5f;
+    [SerializeField]
+    private float _horizontalSpeed = 5f;
 
-    [Header("Crane Vertical Speed")]//アームの移動速度
-    [SerializeField] private float _verticalSpeed = 5f;
+    [Header("Crane Vertical Speed")] //アームの移動速度
+    [SerializeField]
+    private float _verticalSpeed = 5f;
 
-    [Header("Fall Limit")]//Y座標の下降限界
-    [SerializeField] private float _fallLimitY = -1f;
+    [Header("Fall Limit")] //Y座標の下降限界
+    [SerializeField]
+    private float _fallLimitY = -1f;
 
-    [Header("Upper Limit")]//Y座標の上昇限界
-    [SerializeField] private float _upperLimit = 5f;
+    [Header("Upper Limit")] //Y座標の上昇限界
+    [SerializeField]
+    private float _upperLimit = 5f;
 
-    [Header("Start Position")]
-    [SerializeField] private Vector2 _startPosition;
+    [Header("Start Position")] [SerializeField]
+    private Vector2 _startPosition;
 
-    [Header("References")]
-    [SerializeField] private Transform _catchPoint; // 景品を固定する場所
+    [Header("References")] [SerializeField]
+    private Transform _catchPoint; // 景品を固定する場所
+
     [SerializeField] private ScoreTextManager _scoreTextManager; // お金管理
 
     private const float _WAITTIME = 1f; // 下がったあとの待機時間 
@@ -29,13 +40,13 @@ public class CraneController : MonoBehaviour
 
     private bool _isWaiting;
 
-    private CraneStates _currentMode = CraneStates.None;   //開始ModeはNoneでスタート
+    private CraneStates _currentMode = CraneStates.None; //開始ModeはNoneでスタート
 
-    private GameObject _caughtPrize = null; // 掴んでいる景品を保持する変数
+    private PrizeOperation _caughtPrize; // 掴んでいる景品を保持する変数
 
     private void Awake()
     {
-        _rb2D = GetComponent<Rigidbody2D>(); 
+        _rb2D = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -66,7 +77,7 @@ public class CraneController : MonoBehaviour
     /// </summary>
     private void UpdateMoveHorizontal()
     {
-        float move = Input.GetAxis("Horizontal");
+        float move = GetAxisHorizontal();
         _rb2D.linearVelocity = new Vector2(move * _horizontalSpeed, 0f);
     }
 
@@ -76,12 +87,12 @@ public class CraneController : MonoBehaviour
     private void UpdateMoveDown()
     {
         _rb2D.linearVelocity = new Vector2(0f, -_verticalSpeed);
-       
-        if(_rb2D.position.y <= _fallLimitY)
+
+        if (_rb2D.position.y <= _fallLimitY)
         {
             if (_isWaiting) return;
             StartCoroutine(MoveCatch());
-        }       
+        }
     }
 
     /// <summary>
@@ -93,7 +104,7 @@ public class CraneController : MonoBehaviour
         _rb2D.linearVelocity = Vector2.zero; // 待機中は止める
 
         yield return new WaitForSeconds(_WAITTIME);
-        
+
         // 何か掴んでいれば「景品あり」、空なら「上昇」へ
         if (_caughtPrize != null)
         {
@@ -103,6 +114,7 @@ public class CraneController : MonoBehaviour
         {
             _currentMode = CraneStates.MoveUp;
         }
+
         _isWaiting = false;
     }
 
@@ -111,7 +123,7 @@ public class CraneController : MonoBehaviour
     /// </summary>
     private void UpdateMoveUp()
     {
-        if(_rb2D.position.y < _upperLimit)
+        if (_rb2D.position.y < _upperLimit)
         {
             _rb2D.linearVelocity = new Vector2(0f, _verticalSpeed);
         }
@@ -137,7 +149,7 @@ public class CraneController : MonoBehaviour
             _rb2D.linearVelocity = Vector2.zero;
             ReturnStartPosition();
         }
-    }  
+    }
 
     /// <summary>
     /// 景品を運ぶための左右操作
@@ -147,8 +159,8 @@ public class CraneController : MonoBehaviour
         float move = Input.GetAxis("Horizontal");
         _rb2D.linearVelocity = new Vector2(move * _horizontalSpeed, 0f);
 
-        // スペースキーで切り離し
-        if (Input.GetKeyDown(KeyCode.Space))
+        // 下がる時と同じキーで落とす
+        if (Input.GetKeyDown(_downKey))
         {
             MoveRelease();
         }
@@ -161,13 +173,10 @@ public class CraneController : MonoBehaviour
     {
         if (_caughtPrize != null)
         {
-            PrizeOperation prize = _caughtPrize.GetComponent<PrizeOperation>();
-            if (prize != null)
-            {
-                prize.BeReleased();
-            }
+            _caughtPrize.BeReleased();
             _caughtPrize = null;
         }
+
         RestartState();
     }
 
@@ -176,7 +185,7 @@ public class CraneController : MonoBehaviour
     /// </summary>
     private void GetInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(_downKey))
         {
             if (_scoreTextManager != null) _scoreTextManager.RequestAction(100);
             _currentMode = CraneStates.MoveDown;
@@ -192,6 +201,22 @@ public class CraneController : MonoBehaviour
         _currentMode = CraneStates.None;
     }
 
+    private int GetAxisHorizontal()
+    {
+        int i = 0;
+        if (Input.GetKeyDown(_leftKey))
+        {
+            i--;
+        }
+
+        if (Input.GetKeyDown(_rightKey))
+        {
+            i++;
+        }
+
+        return i;
+    }
+
     /// <summary>
     /// 景品取得処理
     /// </summary>
@@ -205,7 +230,7 @@ public class CraneController : MonoBehaviour
                 PrizeOperation prize = other.GetComponent<PrizeOperation>();
                 if (prize != null)
                 {
-                    _caughtPrize = other.gameObject;
+                    _caughtPrize = prize;
                     prize.BeCaught(_catchPoint);
                 }
             }
