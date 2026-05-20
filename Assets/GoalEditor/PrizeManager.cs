@@ -12,14 +12,13 @@ public class PrizeManager : MonoBehaviour
         Instance = this;
     }
 
-    [System.Obsolete]
-    public void SendToStorage(GameObject prize)
+     public void SendToStorage(GameObject prize)
     {
         // 物理を止める
         Rigidbody2D rb = prize.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
             rb.bodyType = RigidbodyType2D.Kinematic;
         }

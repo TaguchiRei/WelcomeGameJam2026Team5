@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.U2D.ScriptablePacker;
 
 public class GoalEditor : MonoBehaviour
 {
