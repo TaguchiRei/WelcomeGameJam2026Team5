@@ -84,7 +84,7 @@ public class CraneController : MonoBehaviour
     }
 
     /// <summary>
-    /// ïﬂÇ‹Ç¶ÇΩèÛë‘Ç≈ÇPïbä‘ë“ã@
+    /// ÉAÅ[ÉÄDownèÛë‘Ç≈ÇPïbä‘ë“ã@
     /// </summary>
     /// <returns></returns>
     private IEnumerator MoveCatch()
@@ -180,7 +180,7 @@ public class CraneController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Prize"))
         {
-
+            
         }
     }
 }
