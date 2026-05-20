@@ -14,6 +14,11 @@ public class PrizeManager : MonoBehaviour
 
      public void SendToStorage(GameObject prize)
     {
+        if (storagePoint == null)
+        {
+            Debug.Log("storagePoint is not assigned");
+            return;
+        }
         // 物理を止める
         Rigidbody2D rb = prize.GetComponent<Rigidbody2D>();
         if (rb != null)
