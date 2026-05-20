@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
+
 public class ArrowRenderer : MonoBehaviour
 {
     private LineRenderer line;
@@ -8,6 +10,7 @@ public class ArrowRenderer : MonoBehaviour
     {
         line = GetComponent<LineRenderer>();
         line.enabled = false; // 初期は非表示
+        
     }
 
     public void DrawArrow(Vector2 force)

@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+
 public class PrizeController : MonoBehaviour
 {
     [SerializeField] private ArrowRenderer arrow; // Inspectorで設定
@@ -8,6 +10,11 @@ public class PrizeController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (arrow == null)
+        {
+            Debug.Log("ArrowRenderer is not assigned");
+            return;
+        }
     }
 
     public void Launch(Vector2 force)
