@@ -16,7 +16,7 @@ public class playSceneLoader : MonoBehaviour
     {
 
     }
-    private void ButtonSystem()
+    public void ButtonSystem()
     {
         SceneManager.LoadScene(sceneName);
     }
