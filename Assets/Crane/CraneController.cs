@@ -24,8 +24,6 @@ public class CraneController : MonoBehaviour
 
     private Rigidbody2D _rb2D;
 
-    private bool _isWaiting;
-
     private CraneStates nowMode = CraneStates.None;   //初期ModeはNoneでスタート
 
     private void Awake()
@@ -77,27 +75,10 @@ public class CraneController : MonoBehaviour
        
         if(_rb2D.position.y <= _fallLimitY)
         {
-            if (_isWaiting) return;
-
-            StartCoroutine(MoveCatch());
+            nowMode = CraneStates.MoveUp;
+            return;
         }       
     }
-
-    /// <summary>
-    /// アームDown状態で１秒間待機
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator MoveCatch()
-    {
-        _isWaiting = true;
-
-        yield return new WaitForSeconds(_WAITTIME);
-        
-
-        nowMode = CraneStates.MoveUp;
-        _isWaiting = false;
-    }
-
 
     /// <summary>
     /// アームUp処理 + prize未取得の時はNoneに状態移行処理
@@ -112,6 +93,7 @@ public class CraneController : MonoBehaviour
         else
         {
             nowMode = CraneStates.None;
+            return;
         }
     }
 
@@ -170,6 +152,7 @@ public class CraneController : MonoBehaviour
     private void RestartState()
     {
         nowMode = CraneStates.None;
+        return;
     }
 
     /// <summary>
@@ -180,7 +163,8 @@ public class CraneController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Prize"))
         {
-            
+            nowMode = CraneStates.MoveUp;
+            return;
         }
     }
 }
