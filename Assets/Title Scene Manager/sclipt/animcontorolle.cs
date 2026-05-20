@@ -13,9 +13,4 @@ public class animcontorolle : MonoBehaviour
         animator.SetInteger("animNumber",randamNumber);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
