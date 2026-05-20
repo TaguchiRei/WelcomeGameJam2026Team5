@@ -39,7 +39,7 @@ public class CraneController : MonoBehaviour
 
     private bool _isWaiting;
 
-    private CraneStates _currentMode = CraneStates.None; //開始ModeはNoneでスタート
+    private CraneState _currentMode = CraneState.None; //開始ModeはNoneでスタート
 
     private PrizeOperation _caughtPrize; // 掴んでいる景品を保持する変数
 
@@ -52,20 +52,20 @@ public class CraneController : MonoBehaviour
     {
         switch (_currentMode)
         {
-            case CraneStates.None:
+            case CraneState.None:
                 UpdateMoveHorizontal();
                 GetInput();
                 break;
 
-            case CraneStates.MoveDown:
+            case CraneState.MoveDown:
                 UpdateMoveDown();
                 break;
 
-            case CraneStates.MoveUp:
+            case CraneState.MoveUp:
                 UpdateMoveUp();
                 break;
 
-            case CraneStates.HavePrize:
+            case CraneState.HavePrize:
                 UpdateHavePrize();
                 break;
         }
@@ -90,7 +90,7 @@ public class CraneController : MonoBehaviour
         if (_rb2D.position.y <= _fallLimitY)
         {
             if (_isWaiting) return;
-            _currentMode = CraneStates.MoveUp;
+            _currentMode = CraneState.MoveUp;
         }
     }
 
@@ -106,7 +106,7 @@ public class CraneController : MonoBehaviour
         else
         {
             _rb2D.linearVelocity = Vector2.zero;
-            _currentMode = CraneStates.None;
+            _currentMode = CraneState.None;
         }
     }
 
@@ -123,14 +123,14 @@ public class CraneController : MonoBehaviour
         {
             // 上まで上がったら、左右操作を受け付ける
             _rb2D.linearVelocity = Vector2.zero;
-            ReturnStartPosition();
+            UpdateMoveHorizontalHavePrize();
         }
     }
 
     /// <summary>
     /// 景品を運ぶための左右操作
     /// </summary>
-    private void ReturnStartPosition()
+    private void UpdateMoveHorizontalHavePrize()
     {
         float move = GetAxisHorizontal();
         _rb2D.linearVelocity = new Vector2(move * _horizontalSpeed, 0f);
@@ -145,7 +145,7 @@ public class CraneController : MonoBehaviour
     /// <summary>
     /// アイテムを離す処理
     /// </summary>
-    private void MoveRelease()
+    public void MoveRelease()
     {
         if (_caughtPrize != null)
         {
@@ -153,28 +153,29 @@ public class CraneController : MonoBehaviour
             _caughtPrize = null;
         }
 
-        RestartState();
+        // 途中で落としても必ず上まで戻るようにする
+        _currentMode = CraneState.MoveUp;
     }
 
     /// <summary>
-    /// Spaceキーが押された際の状態変化（お金の支払いも追加）
+    /// Spaceキーが押された際の状態変化
     /// </summary>
     private void GetInput()
     {
         if (Input.GetKeyDown(_downKey))
         {
             if (_scoreTextManager != null) _scoreTextManager.RequestAction(100);
-            _currentMode = CraneStates.MoveDown;
+            _currentMode = CraneState.MoveDown;
         }
     }
 
     /// <summary>
-    /// 開始状態（None）へ戻す
+    /// 開始状態へ戻す
     /// </summary>
     private void RestartState()
     {
         _rb2D.linearVelocity = Vector2.zero;
-        _currentMode = CraneStates.None;
+        _currentMode = CraneState.None;
     }
 
     private int GetAxisHorizontal()
@@ -199,7 +200,7 @@ public class CraneController : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         // 下降中、かつまだ何も掴んでいない時だけキャッチ
-        if (_currentMode == CraneStates.MoveDown && _caughtPrize == null)
+        if (_currentMode == CraneState.MoveDown && _caughtPrize == null)
         {
             if (other.gameObject.CompareTag("Prize"))
             {
@@ -208,6 +209,7 @@ public class CraneController : MonoBehaviour
                 {
                     _caughtPrize = prize;
                     prize.BeCaught(_catchPoint);
+                    _currentMode = CraneState.HavePrize;
                 }
             }
         }

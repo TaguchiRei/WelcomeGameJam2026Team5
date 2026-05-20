@@ -1,4 +1,4 @@
-public enum CraneStates
+public enum CraneState
 {
     None,
     MoveDown,

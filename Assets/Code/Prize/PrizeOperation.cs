@@ -43,10 +43,21 @@ public class PrizeOperation : MonoBehaviour
     }
 
     /// <summary>
-    /// 壁などに当たったとき、衝突面の向きに合わせて反射する
+    /// 衝突時の処理
     /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // 掴まれている時に他の景品が当たったら、強制的に落とされる
+        if (_isCaught && collision.gameObject.CompareTag("Prize"))
+        {
+            CraneController crane = GetComponentInParent<CraneController>();
+            if (crane != null)
+            {
+                crane.MoveRelease();
+                return;
+            }
+        }
+
         if (_isCaught || _isDragging || !collision.gameObject.CompareTag(_reflectTag) || collision.contactCount == 0)
         {
             return;
