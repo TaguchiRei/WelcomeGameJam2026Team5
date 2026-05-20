@@ -125,12 +125,9 @@ public class CraneController : MonoBehaviour
     /// </summary>
     private void ReturnStartPosition()
     {
-        if(_rb2D.position.x > _startPosition.x)
-        {
-            _rb2D.linearVelocity = new Vector3(_horizontalSpeed, 0f, 0f);
-        }
+        UpdateMoveHorizontal();
 
-        if(_rb2D.position.x <=  _startPosition.x)
+        if (_rb2D.position.x <=  _startPosition.x)
         {
             MoveRelease();
         } 
