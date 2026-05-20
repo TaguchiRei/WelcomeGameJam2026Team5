@@ -18,7 +18,7 @@ public class CraneController : MonoBehaviour
     [Header("Start Position")]
     [SerializeField] private Vector2 _startPosition;
 
-    //キー指定
+    [Header("Move Input Key")]//キー指定
     [SerializeField] private KeyCode _leftKey;
     [SerializeField] private KeyCode _rightKey;
     [SerializeField] private KeyCode _downKey;
