@@ -10,6 +10,7 @@ public class PrizeOperation : MonoBehaviour
     private Camera mainCamera;
     private Vector2 mouseDownPosition;
     private bool isDragging;
+    private bool isCaught = false;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class PrizeOperation : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
+        if (isCaught) return;
         isDragging = true;
         mouseDownPosition = GetMouseWorldPosition();
         SetVelocity(Vector2.zero);
@@ -32,6 +34,7 @@ public class PrizeOperation : MonoBehaviour
     /// </summary>
     private void OnMouseDrag()
     {
+        if (isCaught) return;
         rb.MovePosition(GetMouseWorldPosition());
     }
 
@@ -40,6 +43,7 @@ public class PrizeOperation : MonoBehaviour
     /// </summary>
     private void OnMouseUp()
     {
+        if (isCaught) return;
         isDragging = false;
 
         Vector2 mouseUpPosition = GetMouseWorldPosition();
@@ -53,7 +57,7 @@ public class PrizeOperation : MonoBehaviour
     /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isDragging || !collision.gameObject.CompareTag(reflectTag) || collision.contactCount == 0)
+        if (isCaught || isDragging || !collision.gameObject.CompareTag(reflectTag) || collision.contactCount == 0)
         {
             return;
         }
@@ -63,6 +67,23 @@ public class PrizeOperation : MonoBehaviour
         Vector2 reflectedVelocity = Vector2.Reflect(currentVelocity, normal);
 
         SetVelocity(reflectedVelocity * reflectPower);
+    }
+
+    public void BeCaught(Transform parentPoint)
+    {
+        isCaught = true;
+        rb.isKinematic = true;
+        SetVelocity(Vector2.zero);
+        rb.angularVelocity = 0f;
+        transform.SetParent(parentPoint);
+        transform.localPosition = Vector3.zero;
+    }
+
+    public void BeReleased()
+    {
+        isCaught = false;
+        transform.SetParent(null);
+        rb.isKinematic = false;
     }
 
     private Vector2 GetMouseWorldPosition()

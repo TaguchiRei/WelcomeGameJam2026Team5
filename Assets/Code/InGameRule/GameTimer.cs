@@ -3,27 +3,26 @@ using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour
 {
-    [SerializeField] private Text timerText;
-    [SerializeField] private float endTime = 30f;
-    [SerializeField] private ResultManager resultManager;
+    [SerializeField] private Text _timerText;
+    [SerializeField] private float _endTime = 30f;
 
-    private bool isGameEnd = false;
+    private bool _isGameEnd = false;
 
     void Update()
     {
-        if (isGameEnd) return;
+        if (_isGameEnd) return;
 
         // 時間を減らす
-        endTime -= Time.deltaTime;
+        _endTime -= Time.deltaTime;
 
         // 小数点なしで表示
-        timerText.text = "Time : " + (int)endTime;
+        _timerText.text = "Time : " + (int)_endTime;
 
         // 0になったら終了
-        if (endTime <= 0)
+        if (_endTime <= 0)
         {
-            isGameEnd = true;
-            resultManager.ShowResult();
+            _isGameEnd = true;
+            //TODO ここでリザルトを表示するコードを呼び出す
         }
     }
 }

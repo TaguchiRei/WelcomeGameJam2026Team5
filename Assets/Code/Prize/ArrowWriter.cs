@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
-public class PrizeController : MonoBehaviour
+public class ArrowWriter : MonoBehaviour
 {
     [SerializeField] private ArrowRenderer arrow; // Inspectorで設定
     private Rigidbody2D rb;
