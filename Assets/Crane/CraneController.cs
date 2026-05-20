@@ -100,7 +100,7 @@ public class CraneController : MonoBehaviour
 
 
     /// <summary>
-    /// アームUp処理 + Noneに状態移行処理
+    /// アームUp処理 + prize未取得の時はNoneに状態移行処理
     /// </summary>
     private void UpdateMoveUp()
     {
@@ -116,7 +116,7 @@ public class CraneController : MonoBehaviour
     }
 
     /// <summary>
-    /// アームUp処理
+    /// アームUp処理　＋ prize取得のときstartPositionに移動するメソッドを取得
     /// </summary>
     private void UpdateHavePrize()
     {
@@ -172,7 +172,10 @@ public class CraneController : MonoBehaviour
         nowMode = CraneStates.None;
     }
 
-
+    /// <summary>
+    /// prize取得処理
+    /// </summary>
+    /// <param name="other"></param>
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Prize"))
