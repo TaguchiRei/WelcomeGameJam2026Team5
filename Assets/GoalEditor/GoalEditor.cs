@@ -16,7 +16,5 @@ public class GoalEditor : MonoBehaviour
         // 景品を回収場所へ移動
         PrizeManager.Instance.SendToStorage(collision.gameObject);
 
-        // 演出
-        EffectManager.Instance.PlayGoalEffect(transform.position);
     }
 }
