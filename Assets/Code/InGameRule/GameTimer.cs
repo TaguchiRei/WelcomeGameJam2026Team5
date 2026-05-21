@@ -3,31 +3,31 @@ using UnityEngine.UI;
 
 public class GameTimer : MonoBehaviour
 {
+    public bool IsTimeUp => _currentTime <= 0;
     /// <summary> 残り時間のカウントダウンを表示するUIテキスト </summary>
     [SerializeField] private Text _remainingTimeText;
     /// <summary> ゲーム終了までの残り秒数 </summary>
-    [SerializeField] private float _remainingTime = 30f;
-    private float _currentTime = 30f;
-    [SerializeField] private Image _timerCircle;
+    [SerializeField] private float _remainingTime = 30f; 
+
     /// <summary> ゲームが終了判定済みかどうかを示すフラグ </summary>
     private bool _isTimeUp;
-    public bool IsTimeUp => IsTimeUp;
-    
-    void Start()
+
+    private float _currentTime = 0;
+
+    private void Start()
     {
         _currentTime = _remainingTime;
-        _timerCircle.fillAmount = 1f;
     }
+
     void Update()
     {
-        _currentTime -= Time.deltaTime;
-        _currentTime = Mathf.Max(_currentTime, 0f);
-        _timerCircle.fillAmount = _currentTime / _remainingTime;
         if (_isTimeUp) return;
 
-        _remainingTimeText.text = "Time : " + (int)_remainingTime;
+        _currentTime -= Time.deltaTime;
 
-        if (_remainingTime <= 0)
+        _remainingTimeText.text = "Time : " + (int)_currentTime ;
+
+        if (_currentTime <= 0)
         {
             _isTimeUp = true;
             //TODO ここでリザルトを表示するコードを呼び出す
