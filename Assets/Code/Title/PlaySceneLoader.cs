@@ -4,12 +4,12 @@ using UnityEngine.SceneManagement;
 public class PlaySceneLoader : MonoBehaviour
 {
     public float _rateSecond;
-    
+
     [SerializeField] string _sceneName;
 
     public void ButtonSystem()
     {
-        SceneManager.LoadScene(_sceneName);
+        SceneLoader.Instance.LoadScene(_sceneName);
     }
 
     public void LoadRate()
