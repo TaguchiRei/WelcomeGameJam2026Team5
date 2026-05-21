@@ -9,7 +9,8 @@ public class GameTimer : MonoBehaviour
     [SerializeField] private float _remainingTime = 30f;
 
     /// <summary> ゲームが終了判定済みかどうかを示すフラグ </summary>
-    private bool _isTimeUp = false;
+    private bool _isTimeUp;
+    public bool IsTimeUp => IsTimeUp;
 
     void Update()
     {

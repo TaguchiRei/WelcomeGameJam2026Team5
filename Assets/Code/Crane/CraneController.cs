@@ -32,6 +32,7 @@ public class CraneController : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private Transform _catchPoint; // 景品を固定する場所
+    private GameTimer _gameTimer;
 
     [SerializeField] private ScoreTextManager _scoreTextManager; // お金管理
 
@@ -56,6 +57,8 @@ public class CraneController : MonoBehaviour
 
     private void Update()
     {
+        if (_gameTimer.IsTimeUp) return;
+
         switch (_currentMode)
         {
             case CraneState.None:
