@@ -23,7 +23,7 @@ public class TitleSceneManager : MonoBehaviour
     {
         gameStarted = true;
 
-        startPanel.SetAcive(false);
+        startPanel.SetActive(false);
         Time.timeScale = 1f;
 
         Debug.Log("Game Start!");

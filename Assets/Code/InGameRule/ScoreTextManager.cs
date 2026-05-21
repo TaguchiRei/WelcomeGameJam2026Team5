@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class ScoreTextManager : MonoBehaviour
 {
     /// <summary> 客側（クレーン操作側）の純損益を表示するテキスト </summary>
-    [SerializeField] private Text _customerProfitText;
+    [SerializeField] private TextMeshProUGUI _customerProfitText;
     /// <summary> 店側（プライズ操作側）の純損益を表示するテキスト </summary>
-    [SerializeField] private Text _storeProfitText;
+    [SerializeField] private TextMeshProUGUI _storeProfitText;
 
     /// <summary> テキスト点滅演出用のコルーチン（客側） </summary>
     private Coroutine _customerBlinkCoroutine;
@@ -47,7 +48,7 @@ public class ScoreTextManager : MonoBehaviour
         _storeProfitText.text = "店側損益: ¥" + _storeTotalProfit.ToString();
     }
 
-    IEnumerator BlinkEffect(Text targetText, Color flashColor)
+    IEnumerator BlinkEffect(TextMeshProUGUI targetText, Color flashColor)
     {
         Color originalColor = _baseTextColor;
 
