@@ -16,6 +16,11 @@ public class ArrowWriter : MonoBehaviour
             Debug.Log("ArrowRenderer is not assigned");
         }
     }
+    public void Preview(Vector2 force)
+    {
+        _arrow.Show();
+        _arrow.DrawArrow(force);
+    }
 
     public void Launch(Vector2 force)
     {
