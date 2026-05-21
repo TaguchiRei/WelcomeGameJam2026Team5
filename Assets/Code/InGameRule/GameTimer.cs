@@ -10,7 +10,9 @@ public class GameTimer : MonoBehaviour
     private float _currentTime = 30f;
     [SerializeField] private Image _timerCircle;
     /// <summary> ゲームが終了判定済みかどうかを示すフラグ </summary>
-    private bool _isTimeUp = false;
+    private bool _isTimeUp;
+    public bool IsTimeUp => IsTimeUp;
+    
     void Start()
     {
         _currentTime = _remainingTime;
