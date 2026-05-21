@@ -5,6 +5,7 @@ public class PrizeOperation : MonoBehaviour
     [SerializeField] private float _forcePower = 5.0f;
     [SerializeField] private string _reflectTag = "Wall";
     [SerializeField] private float _reflectPower = 1.0f;
+    [SerializeField] private ArrowWriter _arrowWriter;
 
     private Rigidbody2D _rb;
     private Camera _mainCamera;
@@ -16,6 +17,17 @@ public class PrizeOperation : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _mainCamera = Camera.main;
+    }
+    private void Update()
+    {
+        if (_isDragging)
+        {
+            Vector2 currentMouse = GetMouseWorldPosition();
+            Vector2 force =
+                ((Vector2)transform.position - currentMouse) * _forcePower;
+
+            _arrowWriter.Preview(force);
+        }
     }
 
     /// <summary>
@@ -39,7 +51,7 @@ public class PrizeOperation : MonoBehaviour
         Vector2 mouseUpPosition = GetMouseWorldPosition();
         Vector2 force = (Vector2)transform.position - mouseUpPosition;
 
-        _rb.AddForce(force * _forcePower, ForceMode2D.Impulse);
+        _arrowWriter.Launch(force * _forcePower);
     }
 
     /// <summary>
