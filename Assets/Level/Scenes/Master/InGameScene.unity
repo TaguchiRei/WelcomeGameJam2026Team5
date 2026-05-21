@@ -860,7 +860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _remainingTimeText: {fileID: 152865006}
-  _remainingTime: 30
+  _remainingTime: 5
   _timerImage: {fileID: 1496412129}
   _winner: {fileID: 9057676872862119385}
 --- !u!114 &779325323
@@ -2139,7 +2139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.71068066, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2147,7 +2147,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -2413806693520163455, guid: f6ab7addae6c92e44b1bdc97de2407fd, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2927,6 +2927,12 @@ PrefabInstance:
     - target: {fileID: 7962959014536227932, guid: 4e8fcbb4ea47377459d8fab35ff2636b, type: 3}
       propertyPath: m_Name
       value: ResultCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8060855274247483688, guid: 4e8fcbb4ea47377459d8fab35ff2636b, type: 3}
+      propertyPath: m_text
+      value: '
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 8060855274247483688, guid: 4e8fcbb4ea47377459d8fab35ff2636b, type: 3}
       propertyPath: m_fontAsset
