@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class winner : MonoBehaviour
+public class Winner : MonoBehaviour
 {
     public int teamA_Score = 0;
     public int teamB_Score = 0;
@@ -18,13 +18,13 @@ public class winner : MonoBehaviour
     {
         originalColor = resultText.color;
     }
-    public void SetScore(int a, int b) 
+    public void SetScore(int a, int b)
     {
         teamA_Score = a;
         teamB_Score = b;
     }
 
-    public string GetResult() 
+    public string GetResult()
     {
         if (teamA_Score > teamB_Score)
         {
@@ -34,7 +34,7 @@ public class winner : MonoBehaviour
         {
             return "Team B Wins";
         }
-        else 
+        else
         {
             return "Draw";
         }
@@ -45,17 +45,17 @@ public class winner : MonoBehaviour
         string result = GetResult();
 
         resultText.text = result;
-        
+
         Debug.Log(GetResult());
 
         if (result != "Draw")
-            {
-                StartCoroutine(FlashText(drawColor));
-            }
+        {
+            StartCoroutine(FlashText(drawColor));
+        }
         else
-            {
-                StartCoroutine(FlashText(flashColor));
-            }
+        {
+            StartCoroutine(FlashText(flashColor));
+        }
     }
 
     IEnumerator FlashText(Color targetColor)
@@ -70,14 +70,5 @@ public class winner : MonoBehaviour
 
             yield return new WaitForSeconds(0.3f);
         }
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-  
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
