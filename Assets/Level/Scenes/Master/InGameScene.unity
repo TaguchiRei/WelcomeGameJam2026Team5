@@ -758,7 +758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _remainingTimeText: {fileID: 152865006}
-  _remainingTime: 5
+  _remainingTime: 30
   _timerImage: {fileID: 1496412129}
   _winner: {fileID: 9057676872862119385}
 --- !u!114 &779325323
