@@ -18,6 +18,7 @@ public class PrizeOperation : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _mainCamera = Camera.main;
+        _gameTimer = FindAnyObjectByType<GameTimer>();
     }
     private void Update()
     {
