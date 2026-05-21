@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CraneController : MonoBehaviour
 {
-    [Header("Control")] [SerializeField] private KeyCode _leftKey = KeyCode.A;
+    [Header("Control")][SerializeField] private KeyCode _leftKey = KeyCode.A;
     [SerializeField] private KeyCode _rightKey = KeyCode.D;
     [SerializeField] private KeyCode _downKey = KeyCode.Space;
 
@@ -25,13 +25,19 @@ public class CraneController : MonoBehaviour
     [SerializeField]
     private float _upperLimit = 5f;
 
-    [Header("Start Position")] [SerializeField]
+    [Header("Start Position")]
+    [SerializeField]
     private Vector2 _startPosition;
 
-    [Header("References")] [SerializeField]
+    [Header("References")]
+    [SerializeField]
     private Transform _catchPoint; // 景品を固定する場所
 
     [SerializeField] private ScoreTextManager _scoreTextManager; // お金管理
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip _armDownSE;
+    [SerializeField] private AudioClip _armUpSE;
 
     private const float _WAITTIME = 1f; // 下がったあとの待機時間 
 
@@ -91,6 +97,8 @@ public class CraneController : MonoBehaviour
         {
             if (_isWaiting) return;
             _currentMode = CraneState.MoveUp;
+
+            SoundEffectPool.Instance.GetSeObject().Play(_armUpSE);
         }
     }
 
@@ -166,6 +174,8 @@ public class CraneController : MonoBehaviour
         {
             if (_scoreTextManager != null) _scoreTextManager.OnCustomerAction(100);
             _currentMode = CraneState.MoveDown;
+
+            SoundEffectPool.Instance.GetSeObject().Play(_armDownSE);
         }
     }
 
@@ -199,17 +209,24 @@ public class CraneController : MonoBehaviour
     /// </summary>
     public void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("hit");
         // 下降中、かつまだ何も掴んでいない時だけキャッチ
         if (_currentMode == CraneState.MoveDown && _caughtPrize == null)
         {
+            Debug.Log($"{_currentMode.ToString()}");
             if (other.gameObject.CompareTag("Prize"))
             {
+
+                Debug.Log($"IsPrize");
                 PrizeOperation prize = other.GetComponent<PrizeOperation>();
                 if (prize != null)
                 {
+                Debug.Log($"PrizeIsNull");
                     _caughtPrize = prize;
                     prize.BeCaught(_catchPoint);
                     _currentMode = CraneState.HavePrize;
+
+                    SoundEffectPool.Instance.GetSeObject().Play(_armUpSE);
                 }
             }
         }
