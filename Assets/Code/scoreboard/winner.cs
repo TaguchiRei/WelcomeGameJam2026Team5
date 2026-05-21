@@ -1,14 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using TMPro;
 
 public class Winner : MonoBehaviour
 {
     public int teamA_Score = 0;
     public int teamB_Score = 0;
 
-    public TextMeshProUGUI resultText;
+    public Text resultText;
 
     private Color flashColor = new Color32(24, 27, 57, 255);
     private Color drawColor = new Color32(255, 233, 170, 255);
@@ -29,28 +28,27 @@ public class Winner : MonoBehaviour
     {
         if (teamA_Score > teamB_Score)
         {
-            return "客側の勝利！";
+            return "Team A Wins";
         }
         else if (teamA_Score < teamB_Score)
         {
-            return "店側の勝利！";
+            return "Team B Wins";
         }
         else
         {
-            return "引き分け";
+            return "Draw";
         }
     }
 
     public void ShowResult()
     {
-        gameObject.SetActive(true);
         string result = GetResult();
 
         resultText.text = result;
 
         Debug.Log(GetResult());
 
-        if (result != "引き分け")
+        if (result != "Draw")
         {
             StartCoroutine(FlashText(drawColor));
         }
