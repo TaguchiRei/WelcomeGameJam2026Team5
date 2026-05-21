@@ -16,20 +16,20 @@ public class Back2Title : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canReturn && Input.GetKeyDown(KeyCode.Space)) 
+        if (canReturn && Input.GetKeyDown(KeyCode.Space))
         {
             ReturnToTitle();
         }
     }
 
-    void EnableReturn() 
+    void EnableReturn()
     {
         canReturn = true;
     }
 
-    public void ReturnToTitle() 
+    public void ReturnToTitle()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("TitleScene");    
+        SceneLoader.Instance.LoadScene("TitleScene");
     }
 }
