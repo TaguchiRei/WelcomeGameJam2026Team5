@@ -32,7 +32,7 @@ public class CraneController : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private Transform _catchPoint; // 景品を固定する場所
-    private GameTimer _gameTimer;
+    [SerializeField] private GameTimer _gameTimer;
 
     [SerializeField] private ScoreTextManager _scoreTextManager; // お金管理
 
