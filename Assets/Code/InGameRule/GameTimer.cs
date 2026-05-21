@@ -7,15 +7,23 @@ public class GameTimer : MonoBehaviour
     [SerializeField] private Text _remainingTimeText;
     /// <summary> ゲーム終了までの残り秒数 </summary>
     [SerializeField] private float _remainingTime = 30f;
-
+    private float _currentTime = 30f;
+    [SerializeField] private Image _timerCircle;
     /// <summary> ゲームが終了判定済みかどうかを示すフラグ </summary>
-    private bool _isTimeUp = false;
-
+    private bool _isTimeUp;
+    public bool IsTimeUp => IsTimeUp;
+    
+    void Start()
+    {
+        _currentTime = _remainingTime;
+        _timerCircle.fillAmount = 1f;
+    }
     void Update()
     {
+        _currentTime -= Time.deltaTime;
+        _currentTime = Mathf.Max(_currentTime, 0f);
+        _timerCircle.fillAmount = _currentTime / _remainingTime;
         if (_isTimeUp) return;
-
-        _remainingTime -= Time.deltaTime;
 
         _remainingTimeText.text = "Time : " + (int)_remainingTime;
 

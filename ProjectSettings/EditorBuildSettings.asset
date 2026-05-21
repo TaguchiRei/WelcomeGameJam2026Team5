@@ -15,11 +15,14 @@ EditorBuildSettings:
     path: Assets/Level/Scenes/Develop/testa.unity
     guid: c4a29d4270aaaa84ea18b2c50cc2635d
   - enabled: 1
-    path: Assets/Level/Scenes/Master/TitleScene.unity
-    guid: 5483862eb5fb8e44880b85504b3ddbcc
+    path: Assets/Level/Scenes/Develop/testMax.unity
+    guid: 93d84410919cf3941a5dfc923c6bc3a2
   - enabled: 1
     path: Assets/Level/Scenes/Master/InGameScene.unity
     guid: 310473d88a0b9704f91ee0b3f1844af5
+  - enabled: 1
+    path: Assets/Level/Scenes/Master/TitleScene.unity
+    guid: 5483862eb5fb8e44880b85504b3ddbcc
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
