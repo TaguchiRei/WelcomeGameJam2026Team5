@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1578742561061606409}
   - component: {fileID: 2077330394343872819}
   - component: {fileID: 7122272337776687486}
+  - component: {fileID: 5280238060484489330}
   m_Layer: 0
   m_Name: Prize
   m_TagString: Prize
@@ -121,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea804ab24dcdbd4985018a579887b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _powor: 0
   _forcePower: 5
   _reflectTag: Wall
   _reflectPower: 1
@@ -349,8 +351,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea804ab24dcdbd4985018a579887b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _powor: 5
   _forcePower: 5
   _reflectTag: Wall
   _reflectPower: 1
   _gameTimer: {fileID: 0}
   _arrowWriter: {fileID: 1578742561061606409}
+--- !u!114 &5280238060484489330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248679994286222769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d00ea4d5ab5f240be7d78b4cc7ec00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prizeData: {fileID: 11400000, guid: 38eb3e2d179333e42b72c10c4c5a40b7, type: 2}
