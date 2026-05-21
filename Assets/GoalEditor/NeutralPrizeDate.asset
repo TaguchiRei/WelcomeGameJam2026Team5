@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2283e6a0d372437448f62c5605c0c6be, type: 3}
   m_Name: NeutralPrizeDate
   m_EditorClassIdentifier: 
-  prizeName: Kuma
-  price: 200
+  prizeName: NeutralPrizeDate
+  price: 500
