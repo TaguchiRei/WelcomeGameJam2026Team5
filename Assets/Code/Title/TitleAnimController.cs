@@ -9,6 +9,6 @@ public class TitleAnimController : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         int randomNum = Random.Range(0, 3);
-        _animator.SetInteger(AnimNumber, randomNum);
+        _animator.SetInteger("AnimNumber", randomNum);
     }
 }
