@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea804ab24dcdbd4985018a579887b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _powor: 0
   _forcePower: 5
   _reflectTag: Wall
   _reflectPower: 1
@@ -350,6 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea804ab24dcdbd4985018a579887b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _powor: 5
   _forcePower: 5
   _reflectTag: Wall
   _reflectPower: 1
