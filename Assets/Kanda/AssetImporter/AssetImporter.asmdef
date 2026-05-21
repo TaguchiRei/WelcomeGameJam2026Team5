@@ -1,0 +1,7 @@
+{
+  "name": "WelcomeGameJam2026Team5.AssetImporter.Editor",
+  "rootNamespace": "WelcomeGameJam2026Team5.Editor.AssetImporter",
+  "references": [],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

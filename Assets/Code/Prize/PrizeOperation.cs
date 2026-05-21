@@ -5,6 +5,7 @@ public class PrizeOperation : MonoBehaviour
     [SerializeField] private float _forcePower = 5.0f;
     [SerializeField] private string _reflectTag = "Wall";
     [SerializeField] private float _reflectPower = 1.0f;
+    [SerializeField] private GameTimer _gameTimer;
     [SerializeField] private ArrowWriter _arrowWriter;
 
     private Rigidbody2D _rb;
@@ -35,7 +36,7 @@ public class PrizeOperation : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
-        if (_isCaught) return;
+        if (_isCaught || _gameTimer.IsTimeUp) return;
         _isDragging = true;
         SetVelocity(Vector2.zero);
     }
@@ -45,7 +46,7 @@ public class PrizeOperation : MonoBehaviour
     /// </summary>
     private void OnMouseUp()
     {
-        if (_isCaught) return;
+        if (_isCaught || _gameTimer.IsTimeUp) return;
         _isDragging = false;
 
         Vector2 mouseUpPosition = GetMouseWorldPosition();
@@ -100,7 +101,7 @@ public class PrizeOperation : MonoBehaviour
     }
 
     private Vector2 GetMouseWorldPosition()
-    {
+    { 
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = -_mainCamera.transform.position.z;
 
