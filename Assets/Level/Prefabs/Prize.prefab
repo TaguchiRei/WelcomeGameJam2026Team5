@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 4283838033908839206}
   - component: {fileID: 3385327148433152921}
   - component: {fileID: 5797899583596869464}
-  - component: {fileID: 1578742561061606409}
   - component: {fileID: 5043362939183065039}
+  - component: {fileID: 1578742561061606409}
   - component: {fileID: 2077330394343872819}
   - component: {fileID: 7122272337776687486}
   m_Layer: 0
@@ -124,7 +124,8 @@ MonoBehaviour:
   _forcePower: 5
   _reflectTag: Wall
   _reflectPower: 1
-  _arrowWriter: {fileID: 0}
+  _gameTimer: {fileID: 0}
+  _arrowWriter: {fileID: 1578742561061606409}
 --- !u!50 &3385327148433152921
 Rigidbody2D:
   serializedVersion: 5
@@ -202,19 +203,6 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
---- !u!114 &1578742561061606409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 248679994286222769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d766fcb5152a0024db37e63f8ed2a921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _arrow: {fileID: 2077330394343872819}
 --- !u!120 &5043362939183065039
 LineRenderer:
   serializedVersion: 2
@@ -322,6 +310,19 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1578742561061606409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248679994286222769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d766fcb5152a0024db37e63f8ed2a921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrow: {fileID: 2077330394343872819}
 --- !u!114 &2077330394343872819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,4 +352,5 @@ MonoBehaviour:
   _forcePower: 5
   _reflectTag: Wall
   _reflectPower: 1
+  _gameTimer: {fileID: 0}
   _arrowWriter: {fileID: 1578742561061606409}
