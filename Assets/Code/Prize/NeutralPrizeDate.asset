@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrizeName: NatualPrizeDate
   Price: 500
+  PrizeSE: {fileID: 8300000, guid: 4f3fd6ad21260254a9f191ebaf398d5c, type: 3}
